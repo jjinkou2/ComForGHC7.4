@@ -120,6 +120,15 @@ comInitialize =
     checkHR o_comInitialize
 
 foreign import ccall "comInitialize" prim_System_Win32_Com_Base_comInitialize :: IO Int32
+
+comInitializeEx :: IO ()
+comInitializeEx =
+  do
+    o_comInitialize <- prim_System_Win32_Com_Base_comInitializeEx
+    checkHR o_comInitialize
+
+foreign import ccall "comInitializeEx" prim_System_Win32_Com_Base_comInitializeEx :: IO Int32
+
 comUnInitialize :: IO ()
 comUnInitialize =
   prim_System_Win32_Com_Base_comUnInitialize

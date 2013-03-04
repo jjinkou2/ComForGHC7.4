@@ -33,9 +33,11 @@ module System.Win32.Com
 
       -- setting up and shutting down.
     , coRun		  -- :: IO a -> IO a
+    , coRunEx
     , coPerformIO         -- :: IO a -> IO a
     , coUnsafePerformIO   -- :: IO a -> a
     , coInitialize	  -- :: IO ()
+    , coInitializeEx	  -- :: IO ()
     , coUnInitialize	  -- :: IO ()
     
       -- GUID API:
@@ -380,6 +382,18 @@ coGetObject fname iid  = do
 coRun :: IO a -> IO a
 coRun io = do
   coInitialize
+  v <-
+    catchComException io
+      (\ err -> do
+        when (isCoError err) (putMessage $ coGetErrorString err)
+        coUnInitialize
+        throwIOComException err)
+  coUnInitialize
+  return v
+
+coRunEx :: IO a -> IO a
+coRunEx io = do
+  coInitializeEx
   v <-
     catchComException io
       (\ err -> do
@@ -926,6 +940,9 @@ coInitialize = comInitialize
 
 coUnInitialize :: IO ()
 coUnInitialize = comUnInitialize
+
+coInitializeEx :: IO ()
+coInitializeEx = comInitializeEx
 
 sizeofIID = sizeofGUID
 
