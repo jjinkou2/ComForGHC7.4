@@ -135,6 +135,20 @@ void comUnInitialize(void)
   }
 }
 
+void shutdownEx__()
+{
+  CoUninitialize ();
+  com_already_initialized = 0;
+  com_already_uninitialized = 0;
+}
+
+void comUnInitializeEx(void)
+{
+  if (!com_already_uninitialized) {
+     com_already_uninitialized=1;
+     atexit(shutdownEx__);
+  }
+}
 /*-----------------------------------------------------------
 -- Object Creation
 -----------------------------------------------------------*/

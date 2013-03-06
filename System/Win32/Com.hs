@@ -39,6 +39,7 @@ module System.Win32.Com
     , coInitialize	  -- :: IO ()
     , coInitializeEx	  -- :: IO ()
     , coUnInitialize	  -- :: IO ()
+    , coUnInitializeEx -- IO ()
     
       -- GUID API:
     , GUID		-- abstract, instance of: Eq, Show
@@ -398,9 +399,9 @@ coRunEx io = do
     catchComException io
       (\ err -> do
         when (isCoError err) (putMessage $ coGetErrorString err)
-        coUnInitialize
+        coUnInitializeEx
         throwIOComException err)
-  coUnInitialize
+  coUnInitializeEx
   return v
 
 -- | @coPerformIO act@ runs @act@ within an exception handler that
@@ -940,6 +941,9 @@ coInitialize = comInitialize
 
 coUnInitialize :: IO ()
 coUnInitialize = comUnInitialize
+
+coUnInitializeEx :: IO ()
+coUnInitializeEx = comUnInitializeEx
 
 coInitializeEx :: IO ()
 coInitializeEx = comInitializeEx

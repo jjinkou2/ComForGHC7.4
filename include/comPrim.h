@@ -138,6 +138,8 @@ void
 STDCALL
 OleUninitialize ();
 
+
+
 extern
 HRESULT
 STDCALL
@@ -647,6 +649,7 @@ extern HRESULT bindObject( const WCHAR* name, IID* iid, void** unk );
 extern HRESULT primProgIDFromCLSID( const CLSID* clsid, WCHAR** clsidStr );
 extern HRESULT primCLSIDFromProgID( const char* progid, CLSID* clsid );
 extern void    comUnInitialize(void);
+extern void    comUnInitializeEx(void);
 extern HRESULT comInitialize(void);
 extern HRESULT primStringToGUID( WCHAR* guidStr, GUID* guid );
 extern HRESULT primGUIDToString( CLSID* guid, WCHAR** guidStr );

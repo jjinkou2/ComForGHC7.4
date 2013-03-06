@@ -129,6 +129,11 @@ comInitializeEx =
 
 foreign import ccall "comInitializeEx" prim_System_Win32_Com_Base_comInitializeEx :: IO Int32
 
+comUnInitializeEx :: IO ()
+comUnInitializeEx =
+  prim_System_Win32_Com_Base_comUnInitializeEx
+
+foreign import ccall "comUnInitializeEx" prim_System_Win32_Com_Base_comUnInitializeEx :: IO ()
 comUnInitialize :: IO ()
 comUnInitialize =
   prim_System_Win32_Com_Base_comUnInitialize
